@@ -58,17 +58,17 @@ export class FileService {
             params: params,
             body: JSON.stringify(data)
         })
-            .toPromise()
-            .then(res => {
-                console.log(res);
-                if (this.isSuccessStatus(res.status)) {
-                    var contentType = res.headers.get('content-type');
-                    return !!contentType ? contentType.indexOf('application/json') >= 0 ? res.json() : null : null;
-                }
-                else {
-                    throw new Error(res.text());
-                }                
-            })                
-            .catch(err => console.log(err));
-    }
+        .toPromise()
+        .then(res => {            
+            console.log(res);                
+            if (res.status >= 200 && res.status < 300) {
+                var contentType = res.headers.get('content-type');
+                return !!contentType ? contentType.indexOf('application/json') >= 0 ? res.json() : null : null;
+            }
+            else {
+                throw new Error(res.text());
+            }                
+        })                
+        .catch(err => console.log(err));
+    }    
 }
