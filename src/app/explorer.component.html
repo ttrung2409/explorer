@@ -1,0 +1,43 @@
+<div class="panel panel-default">
+    <div class="panel-heading">My Directory</div>
+    <div class="panel-body">       
+        <div *ngIf="!!currentPath" 
+             tabindex="0"             
+             [class]="!!focusOnNavigationItem ? 'file focus' : 'file'" 
+             [focus]="focusOnNavigationItem"
+             (keyup.enter)="goBack()"
+             (dblclick)="goBack()"
+             (keydown)="onNavigationItemKeyDown($event, file)">
+            <img src="../assets/folder.png" width="48" height="48" />
+            <div>
+                <label>..</label>                
+            </div>            
+        </div>
+        <div *ngFor="let file of files"
+             [class]="file.isFocused ? 'file focus' : 'file'"
+             tabindex="0"
+             [focus]="file.isFocused"
+             (blur)="onFileBlur(file)"
+             (click)="onFileClick(file)"
+             (dblclick)="file.isDir ? explore(file) : download(file)"
+             (keyup)="onFileKeyUp($event, file)"
+            (keydown)="onFileKeyDown($event, file)">
+            <img *ngIf="file.isDir" src="../assets/folder.png" width="48" height="48" />
+            <img *ngIf="!file.isDir" src="../assets/file.png" width="48" height="48" />
+            <div>
+                <label *ngIf="!file.isRenaming">{{file.name}}</label>
+                <input type="text" *ngIf="file.isRenaming" style="width: 100px" [(ngModel)]="file.name" 
+                       [focus]="file.isRenaming" (onFocus)="onFileNameTextBoxFocus(file)" 
+                       (blur)="onFileNameTextBoxBlur(file)" 
+                       (click)="stopEventPropagation($event)"                       
+                       (dblclick)="stopEventPropagation($event)"                       
+                       (keyup)="onFileNameTextBoxKeyUp($event, file)"
+                       (keydown)="onFileNameTextBoxKeyDown($event, file)"/>
+            </div>            
+        </div>
+    </div>    
+</div>
+<div>    
+    <button class="btn" (click)="createDir()">New Folder</button>        
+    <file-uploader [path]="currentPath" (onUploadComplete)="onUploadComplete($event)"></file-uploader>
+</div>
