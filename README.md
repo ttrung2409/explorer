@@ -3,7 +3,7 @@ Explorer
 ===============
 A simple file explorer created using NodeJs and Angular 2
 
-#How to run:
+##How to run:
 
 1. Install Node.js
 https://nodejs.org/en/download/
