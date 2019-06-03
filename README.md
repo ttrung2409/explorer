@@ -1,7 +1,7 @@
 
 Explorer
 ===============
-A simple file explorer created using NodeJs and Angular 2
+A simple file explorer created using NodeJs and Angular 4
 
 **How to run:**
 
